@@ -23,9 +23,9 @@ jobs:
 
       - run: python run.py
 
-      - run: zip new_zones.shp.zip new_zones.cpg new_zones.dbf new_zones.shp new_zones.shx
+      - run: zip new_zones.shp.zip new_zones.cpg new_zones.dbf new_zones.prj new_zones.shp new_zones.shx
 
-      - run: rm new_zones.cpg new_zones.dbf new_zones.shp new_zones.shx
+      - run: rm new_zones.cpg new_zones.dbf new_zones.prj new_zones.shp new_zones.shx
 
       - run: git config --global --add safe.directory $(realpath .)
 
