@@ -1,0 +1,33 @@
+name: build-main
+run-name: build-main
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    # every day
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    name: download and save data
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v4
+
+      - run: pip install geopandas pyarrow
+
+      - run: python run.py
+
+      - run: zip new_zones.shp.zip new_zones.cpg new_zones.dbf new_zones.shp new_zones.shx
+
+      - run: rm new_zones.cpg new_zones.dbf new_zones.shp new_zones.shx
+
+      - run: git config --global --add safe.directory $(realpath .)
+
+      # Commit all changed files back to the repository
+      - uses: stefanzweifel/git-auto-commit-action@v4
